@@ -12,12 +12,12 @@
       </ul>
       <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <%= link_to "Discussions", "#", class: "nav-item nav-link"%>
+          <%= link_to "Discussions", discussions_path, class: "nav-item nav-link"%>
         </ul>
       </div>
       <ul class="navbar-nav mb-2 mb-lg-0">
         <% if user_signed_in? %>
-          <%= link_to Current.user.username, edit_user_registration_path, class: "nav-item nav-link" %>
+          <%= link_to Current.user.username, "#", class: "nav-item nav-link" %>
           <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
         <% else %>
           <%= link_to "Sign up", new_user_registration_path, class: "nav-item nav-link" %>

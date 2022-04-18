@@ -1,3 +1,12 @@
 <%= turbo_stream_from @discussion %>
+
 <%= render("header", discussion: @discussion) %>
+
+<div id="posts" class="mt-4">
+  <%= render partial: "discussions/posts/post", collection: @posts  %>
+</div>
+
+<div class="mt-4">
+  <%= render("discussions/posts/form", post: @post) %>
+</div>
 <h5>Hey</h5>

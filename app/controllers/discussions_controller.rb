@@ -7,6 +7,8 @@ class DiscussionsController < ApplicationController
   end
 
   def show
+    @posts = @discussion.posts.all.order(created_at: :asc)
+    @post = @discussion.posts.new
   end
 
   def new
@@ -19,7 +21,7 @@ class DiscussionsController < ApplicationController
 
     respond_to do |format|
       if @discussion.save
-        format.html { redirect_to @discussion, notice: "Discussion created" }
+        format.html { redirect_to discussions_path, notice: "Discussion created" }
       else
         format.html { render :new, status: :unprocessable_entity }
       end

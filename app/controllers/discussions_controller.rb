@@ -1,13 +1,17 @@
 class DiscussionsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_discussion, only: [:edit, :show, :update, :destroy]
+  before_action :set_discussion, only: [:show, :edit, :destroy, :update]
 
   def index
     @discussions = Discussion.all.order(updated_at: :desc)
   end
 
+  def show
+  end
+
   def new
     @discussion = Discussion.new
+    @discussion.posts.new
   end
 
   def create
@@ -15,14 +19,11 @@ class DiscussionsController < ApplicationController
 
     respond_to do |format|
       if @discussion.save
-        format.html { redirect_to discussions_path, notice: "Discussion created."}
+        format.html { redirect_to @discussion, notice: "Discussion created" }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
     end
-  end 
-
-  def show
   end
 
   def edit
@@ -32,7 +33,8 @@ class DiscussionsController < ApplicationController
     respond_to do |format|
       if @discussion.update(discussion_params)
         @discussion.broadcast_replace(partial: "discussions/header", locals: { discussion: @discussion })
-        format.html { redirect_to @discussion, notice: "Discussion updated."}
+
+        format.html { redirect_to @discussion, notice: "Discussion updated" }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
@@ -40,17 +42,14 @@ class DiscussionsController < ApplicationController
   end
 
   def destroy
-    respond_to do |format|
-      if @discussion.destroy
-        format.html { redirect_to discussions_path, notice: "Discussion removed."}
-      end
-    end
+    @discussion.destroy!
+    redirect_to discussions_path, notice: 'Discussion removed'
   end
 
   private
 
   def discussion_params
-    params.require(:discussion).permit(:name, :closed, :pinned)
+    params.require(:discussion).permit(:name, :closed, :pinned, posts_attributes: :body)
   end
 
   def set_discussion

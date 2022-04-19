@@ -1,5 +1,6 @@
 class Discussion < ApplicationRecord
   belongs_to :user, default: -> { Current.user }
+  belongs_to :category
 
   validates :name, presence: true
 
@@ -11,7 +12,7 @@ class Discussion < ApplicationRecord
   after_update_commit -> { broadcast_replace_to "discussions" }
   after_destroy_commit -> { broadcast_remove_to "discussions" }
 
-  def to_param
-    "#{id}-#{name.downcase.to_s[0...100]}".parameterize
-  end
+  # def to_param
+  #   "#{id}-#{name.downcase.to_s[0...100]}".parameterize
+  # end
 end

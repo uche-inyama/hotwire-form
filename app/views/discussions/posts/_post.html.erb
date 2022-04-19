@@ -1,7 +1,11 @@
 <div class="my-4">
-  <div class="card card-body">
-    <h4 class="card-title"><%= post.user.username %></h4>
-    <h6 class="card-subtitle mb-3 text-muted border-bottom pb-3">Posted on: <%= post.created_at %></h6>
-    <%= post.body %>
-  </div>
+  <%= turbo_frame_tag post do%>
+    <div class="card card-body">
+      <h4 class="card-title"><%= post.user.username %></h4>
+      <h6 class="card-subtitle mb-3 text-muted border-bottom pb-3">Posted on: <%= post.created_at %></h6>
+      <%= post.body %>
+      <%= link_to "edit", edit_discussion_post_path(post.discussion, post)%>
+      <%= button_to "Delete", discussion_post_path(post.discussion, post), method: :delete %>
+    </div>
+  <% end %>
 </div>

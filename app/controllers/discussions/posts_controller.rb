@@ -7,6 +7,7 @@ module Discussions
     def create
       @post = @discussion.posts.new(post_params)
       respond_to do |format|
+        @post.discussion.post_count += 1
         if @post.save
           format.html { redirect_to discussion_path(@discussion), notice: "Post created" }
         else

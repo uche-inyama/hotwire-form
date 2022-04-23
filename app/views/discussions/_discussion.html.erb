@@ -4,6 +4,6 @@
   posted in: <%= discussion.category_name %> | Posts: <%= discussion.posts.count%>
   <div>
     <%= link_to "Edit", edit_discussion_path(discussion) %>
-    <%= button_to "Delete", discussion_path(discussion), method: :delete %>
+    <%= button_to "Delete", discussion_path(discussion), method: :delete, data: { confirm: "Are you sure, This cannot be undone"} %>
   </div>
 </div>

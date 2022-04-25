@@ -48,6 +48,16 @@ class DiscussionsController < ApplicationController
           old_category.broadcast_replace_to('categories')
           new_category.broadcast_replace_to('categories')
 
+         if @discussion.saved_change_to_closed?
+          @discussion.broadcast_action_to(
+            @discussion,
+            action: :replace,
+            target: "new_post_form",
+            partial: 'discussions/posts/form',
+            locals: { post: @discussion.posts.new }
+          )
+         end
+
         end
         format.html { redirect_to @discussion, notice: "Discussion updated" }
       else

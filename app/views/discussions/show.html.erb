@@ -6,7 +6,8 @@
   <%= render partial: "discussions/posts/post", collection: @posts %>
 </div>
 
+<%= render("discussions/notifications/status", user: current_user, discussion: @discussion) %>
+
 <div class="mt-4">
   <%= render("discussions/posts/form", post: @post) %>
 </div>
-<h5>Hey</h5>
